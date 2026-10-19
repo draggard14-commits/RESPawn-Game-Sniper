@@ -1,0 +1,29 @@
+name: RESPawn Vinted Monitor
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/5 * * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  check-vinted:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download files
+        uses: actions/checkout@v4
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install libraries
+        run: pip install requests beautifulsoup4
+
+      - name: Scan Vinted
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: python sniper.py
