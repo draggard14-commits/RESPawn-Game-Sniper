@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RESPawn Game Sniper</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0c1019;color:#fff;font-family:Arial,sans-serif}
+header{padding:24px 18px;background:linear-gradient(135deg,#e32935,#142e68);text-align:center}
+h1{margin:0;font-size:29px}
+header p{margin:9px 0 0;color:#e5e8f2}
+main{padding:18px;max-width:650px;margin:auto}
+.panel{background:#1a2233;border:1px solid #34415b;border-radius:14px;padding:17px;margin-bottom:17px}
+h2{font-size:18px;margin:0 0 15px}
+label{display:block;margin:12px 0 6px;color:#cbd5e1}
+input,select{width:100%;padding:13px;background:#101725;border:1px solid #485571;border-radius:8px;color:white;font-size:16px}
+button{border:0;border-radius:9px;padding:14px;font-size:15px;font-weight:bold;color:white;background:#df2935;cursor:pointer}
+.primary{width:100%;margin-top:17px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid button{background:#263d6a}
+small{display:block;color:#aebbd0;margin-top:12px;line-height:1.5}
+.status{color:#65e3aa;font-weight:bold}
+footer{text-align:center;padding:20px;color:#aebbd0;font-size:12px}
+</style>
+</head>
+<body>
+<header>
+<h1>🎯 RESPawn Game Sniper</h1>
+<p>OLD GAMES. NEW LIFE.</p>
+</header>
+<main>
+<div class="panel">
+<h2>🔎 Search Vinted</h2>
+<label for="keyword">Game or console</label>
+<input id="keyword" placeholder="Pokemon, Deadpool, Mario...">
+<label for="maxprice">Maximum price ($)</label>
+<input id="maxprice" type="number" value="10" min="1" step="1">
+<label for="platform">Platform</label>
+<select id="platform">
+<option value="">All platforms</option>
+<option>Xbox</option>
+<option>Xbox 360</option>
+<option>Xbox One</option>
+<option>PlayStation</option>
+<option>PS1</option>
+<option>PS2</option>
+<option>PS3</option>
+<option>PS4</option>
+<option>PS5</option>
+<option>Nintendo</option>
+<option>Nintendo Switch</option>
+<option>Nintendo 64</option>
+<option>GameCube</option>
+<option>Game Boy</option>
+</select>
+<button class="primary" onclick="search()">🔍 Find Deals</button>
+<small>Opens Vinted in a new tab, sorted by newest listings.</small>
+</div>
+<div class="panel">
+<h2>⚡ Quick Searches</h2>
+<div class="grid">
+<button onclick="quick('Pokemon')">Pokémon</button>
+<button onclick="quick('Mario')">Mario</button>
+<button onclick="quick('Deadpool')">Deadpool</button>
+<button onclick="quick('Family Guy')">Family Guy</button>
+<button onclick="quick('Nintendo Switch')">Switch Games</button>
+<button onclick="quick('Xbox 360')">Xbox 360</button>
+<button onclick="quick('PS1')">PS1 Games</button>
+<button onclick="quick('Nintendo 64')">Nintendo 64</button>
+</div>
+</div>
+<div class="panel">
+<h2>📋 Buying Rules</h2>
+<p class="status">Manual buying mode</p>
+<p>Target: $10 or less per game.</p>
+<p>Look for games worth $25 or more, with stronger preference for $35+ titles.</p>
+<p>Avoid empty cases, missing discs, sports games, Kinect, Just Dance, and PSP.</p>
+<small>Always check actual sold prices, condition, shipping, and seller details before purchasing.</small>
+</div>
+</main>
+<footer>RESPawn Game Sniper • Version 1.0</footer>
+<script>
+function search(){
+const word=document.getElementById("keyword").value.trim();
+const platform=document.getElementById("platform").value;
+const price=document.getElementById("maxprice").value;
+const query=[word,platform].filter(Boolean).join(" ");
+const url=new URL("https://www.vinted.com/catalog");
+if(query)url.searchParams.set("search_text",query);
+if(price)url.searchParams.set("price_to",price);
+url.searchParams.set("order","newest_first");
+window.open(url.toString(),"_blank","noopener,noreferrer");
+}
+function quick(word){
+document.getElementById("keyword").value=word;
+document.getElementById("platform").value="";
+search();
+}
+</script>
+</body>
+</html>
