@@ -1,1 +1,24 @@
+name: Test Discord Alert
 
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-discord:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Discord test
+        env:
+          WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          if [ -z "$WEBHOOK_URL" ]; then
+            echo "Discord webhook secret is missing"
+            exit 1
+          fi
+          curl --fail-with-body --silent --show-error \
+            -H "Content-Type: application/json" \
+            -d '{"content":"🎯 RESPawn Game Sniper Connected! Discord alerts are working."}' \
+            "$WEBHOOK_URL"
